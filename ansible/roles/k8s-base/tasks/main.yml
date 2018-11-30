@@ -2,31 +2,22 @@
 - name: Ensure SSH Directories
   become: yes
   file:
-    path: /home/ubuntu/.ssh
+    path: /home/vagrant/.ssh
     state: directory
-    owner: ubuntu
-    group: ubuntu
+    owner: vagrant
+    group: vagrant
     mode: 0700
 
 - name: Copy SSH Key Files
   become: yes
   copy:
     src: files/{{ item }}
-    dest: /home/ubuntu/.ssh/{{ item }}
-    owner: ubuntu
-    group: ubuntu
+    dest: /home/vagrant/.ssh/{{ item }}
+    owner: vagrant
+    group: vagrant
     mode: 0600
   with_items:
-    - id_rsa
-    - id_rsa.pub
     - config
-
-- name: Ensure Authorized SSH Key
-  become: yes
-  authorized_key:
-    user: ubuntu
-    key:  "{{ lookup('file', '/home/ubuntu/.ssh/id_rsa.pub') }}"
-    state: present
 
 - name: Remove Default Host Entry
   become: yes
@@ -65,16 +56,15 @@
 - name: Ensure Base Kubernetes
   become: yes
   apt:
-    name: "{{ item }}"
+    pkg:
+      - apt-transport-https
+      - docker-engine
+      - kubelet
+      - kubeadm
+      - kubectl
+      - kubernetes-cni
+      - jq
     state: latest
-  with_items:
-    - apt-transport-https
-    - docker-engine
-    - kubelet
-    - kubeadm
-    - kubectl
-    - kubernetes-cni
-    - jq
   tags:
     - k8s
 
@@ -85,7 +75,7 @@
 
 - name: Ensure User in Docker Group
   user:
-    name=ubuntu
+    name=vagrant
     groups=docker
     append=yes
 
