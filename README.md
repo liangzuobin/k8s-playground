@@ -61,6 +61,24 @@ kube-proxy-amd64-piie9           1/1       Running             0          8m    
 kube-scheduler-k8s1              1/1       Running             0          11m       172.42.42.11   k8s1
 ```
 
+#### ATTENTION: Still need this https://stackoverflow.com/a/40338365/4352653, or you will see something like:
+
+```
+NAMESPACE     NAME                           READY   STATUS              RESTARTS   AGE
+kube-system   coredns-86c58d9df4-bqsh5       0/1     ContainerCreating   0          124m
+kube-system   coredns-86c58d9df4-ndd26       0/1     ContainerCreating   0          124m
+kube-system   etcd-k8s1                      1/1     Running             0          123m
+kube-system   kube-apiserver-k8s1            1/1     Running             0          123m
+kube-system   kube-controller-manager-k8s1   1/1     Running             0          123m
+kube-system   kube-proxy-9ngj5               1/1     Running             0          124m
+kube-system   kube-proxy-j2pws               1/1     Running             0          11m
+kube-system   kube-proxy-q6vdl               1/1     Running             0          123m
+kube-system   kube-scheduler-k8s1            1/1     Running             0          123m
+kube-system   weave-net-sz65d                1/2     CrashLoopBackOff    25         119m
+kube-system   weave-net-vww4b                2/2     Running             0          119m
+kube-system   weave-net-x4fbm                1/2     CrashLoopBackOff    6          11m
+```
+
 ### Starting Networking
 Stating the clustering networking is **NOT** automated and must be completed
 after the `vagrant up` is complete. A script to start the networking is
