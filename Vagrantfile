@@ -6,9 +6,11 @@ Vagrant.configure(2) do |config|
   (1..3).each do |i|
     config.vm.define "k8s#{i}" do |s|
       s.ssh.forward_agent = true
-      s.vm.box = "ubuntu/xenial64"
+
+      # s.vm.box = "ubuntu/xenial64"
+      s.vm.box = "k8s_scratch"
       s.vm.hostname = "k8s#{i}"
-      s.vm.provision :shell, path: "scripts/bootstrap_ansible.sh"
+      # s.vm.provision :shell, path: "scripts/bootstrap_ansible.sh"
       if i == 1
         s.vm.provision :shell, inline: "PYTHONUNBUFFERED=1 ansible-playbook /vagrant/ansible/k8s-master.yml -c local"
       else

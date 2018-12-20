@@ -8,16 +8,16 @@
     group: vagrant
     mode: 0700
 
-- name: Copy SSH Key Files
-  become: yes
-  copy:
-    src: files/{{ item }}
-    dest: /home/vagrant/.ssh/{{ item }}
-    owner: vagrant
-    group: vagrant
-    mode: 0600
-  with_items:
-    - config
+# - name: Copy SSH Key Files
+#   become: yes
+#   copy:
+#     src: files/{{ item }}
+#     dest: /home/vagrant/.ssh/{{ item }}
+#     owner: vagrant
+#     group: vagrant
+#     mode: 0600
+#   with_items:
+#     - config
 
 - name: Remove Default Host Entry
   become: yes
@@ -36,37 +36,37 @@
     - { ip: "172.42.42.12", name: "k8s2" }
     - { ip: "172.42.42.13", name: "k8s3" }
 
-- name: Ensure Google Cloud Apt Key
-  become: yes
-  apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    state: present
-  tags:
-    - k8s
+# - name: Ensure Google Cloud Apt Key
+#   become: yes
+#   apt_key:
+#     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+#     state: present
+#   tags:
+#     - k8s
 
-- name: Ensure Kubernetes Repository
-  become: yes
-  apt_repository:
-    repo: 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
-    state: present
-    update_cache: yes
-  tags:
-    - k8s
+# - name: Ensure Kubernetes Repository
+#   become: yes
+#   apt_repository:
+#     repo: 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
+#     state: present
+#     update_cache: yes
+#   tags:
+#     - k8s
 
-- name: Ensure Base Kubernetes
-  become: yes
-  apt:
-    pkg:
-      - apt-transport-https
-      - docker-engine
-      - kubelet
-      - kubeadm
-      - kubectl
-      - kubernetes-cni
-      - jq
-    state: latest
-  tags:
-    - k8s
+# - name: Ensure Base Kubernetes
+#   become: yes
+#   apt:
+#     pkg:
+#       - apt-transport-https
+#       - docker-engine
+#       - kubelet
+#       - kubeadm
+#       - kubectl
+#       - kubernetes-cni
+#       - jq
+#     state: latest
+#   tags:
+#     - k8s
 
 - name: Ensure Docker Group
   group:
