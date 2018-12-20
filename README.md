@@ -61,6 +61,20 @@ kube-proxy-amd64-piie9           1/1       Running             0          8m    
 kube-scheduler-k8s1              1/1       Running             0          11m       172.42.42.11   k8s1
 ```
 
+### Starting Networking
+Stating the clustering networking is **NOT** automated and must be completed
+after the `vagrant up` is complete. A script to start the networking is
+installed on the cluster master (**k8s1**) as `/usr/local/bin/start-weave`.
+
+```
+vagrant ssh k8s1
+ubuntu@k8s1:~$ start-weave
+clusterrole "weave-net" created
+serviceaccount "weave-net" created
+clusterrolebinding "weave-net" created
+daemonset "weave-net" created
+```
+
 #### ATTENTION: Still need this https://stackoverflow.com/a/40338365/4352653, or you will see something like:
 
 ```
@@ -77,20 +91,6 @@ kube-system   kube-scheduler-k8s1            1/1     Running             0      
 kube-system   weave-net-sz65d                1/2     CrashLoopBackOff    25         119m
 kube-system   weave-net-vww4b                2/2     Running             0          119m
 kube-system   weave-net-x4fbm                1/2     CrashLoopBackOff    6          11m
-```
-
-### Starting Networking
-Stating the clustering networking is **NOT** automated and must be completed
-after the `vagrant up` is complete. A script to start the networking is
-installed on the cluster master (**k8s1**) as `/usr/local/bin/start-weave`.
-
-```
-vagrant ssh k8s1
-ubuntu@k8s1:~$ start-weave
-clusterrole "weave-net" created
-serviceaccount "weave-net" created
-clusterrolebinding "weave-net" created
-daemonset "weave-net" created
 ```
 
 After the network is started, assuming `weave-net` is used, the following
